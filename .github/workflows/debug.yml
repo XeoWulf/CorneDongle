@@ -1,0 +1,25 @@
+name: Debug Prospector
+
+on:
+  workflow_dispatch
+
+jobs:
+  debug:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: West Init
+        run: |
+          pip install west
+          west init -l config
+          west update
+
+      - name: List Prospector Files
+        run: |
+          find . -type f | grep prospector || true
+
+      - name: Find st7789 References
+        run: |
+          grep -Rni "st7789" . || true
